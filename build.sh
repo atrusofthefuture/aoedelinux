@@ -2,10 +2,10 @@
 
 set -e -u
 
-iso_name=aoede_beta
+iso_name=aoedelinux
 iso_label="ARCH_$(date +%Y%m)"
-iso_publisher="Arch Linux <http://www.archlinux.org>"
-iso_application="Arch Linux Live/Rescue CD"
+iso_publisher="Aoede Linux <http://atrusofthefuture.github.io>"
+iso_application="Arch Linux Based Audio Distro"
 iso_version=$(date +%Y.%m.%d)
 install_dir=arch
 work_dir=work
@@ -15,7 +15,9 @@ gpg_key=
 verbose=""
 script_path=$(readlink -f ${0%/*})
 
-### CUSTOM
+### CUSTOM: removes stock linux kernel and headers -- unnecessary bloat; 
+#replaced by linux-rt in package file; 
+#see custom shell function "remove_basepkg" below
 removes=( linux linux-headers )
 
 umask 0022
@@ -67,7 +69,8 @@ make_basefs() {
     mkarchiso ${verbose} -w "${work_dir}/x86_64" -C "${work_dir}/pacman.conf" -D "${install_dir}" -p "haveged intel-ucode amd-ucode memtest86+ mkinitcpio-nfs-utils nbd zsh efitools" install
 }
 
-### CUSTOM
+### CUSTOM: waits for pacstrap to complete and then 
+# removes packages specified in the "removes" variable set at top of file
 remove_basepkg() {
     pacman -r "${work_dir}/x86_64/airootfs/" -Rdd --noconfirm ${removes}
 }
