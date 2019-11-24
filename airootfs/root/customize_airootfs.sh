@@ -45,7 +45,8 @@ systemctl set-default multi-user.target
 groupadd sudo
 
 ## create user "arch" and add to useful groups (esp. sudo since we locked root above)
-! id arch && useradd -m -g users -G "adm,audio,floppy,log,network,rfkill,scanner,storage,optical,power,wheel,sudo" -s /usr/bin/zsh arch
+## sets default password to "live"
+! id arch && useradd -m -p '$6$Q8xieUdz1yfagtkx$/XI9UB6VFk4KTDP9FSk62ftN6UhBfa0BQl3m4uKpC5w0pNj7TMNgrnLlMM1nrfkjTxi7rbXGmsojIP0.tr.MQ0' -g users -G "adm,audio,floppy,log,network,rfkill,scanner,storage,optical,power,wheel,sudo" -s /usr/bin/zsh arch
 ## copy skel files to new home
 cp -aT /etc/skel/ /home/arch/
 chown -R arch: /home/arch/
