@@ -20,6 +20,7 @@ when the build is complete you will find a file named aoedelinux-<date>-x86_64.i
 copy .iso to a USB or DVD medium, or open in a virtual machine<br>
 login as user "arch", password is "live"<br>
 to start the LXDE graphical desktop environment, execute:<br>
+
 `$ startx`
 
 <h3>Audio:</h3>
@@ -34,4 +35,4 @@ My build was interrupted, and I don't want to reinstall the whole filesystem or 
 See [here](https://wiki.archlinux.org/index.php/archiso) for more information
 
 <h3>CONFIG TECHNICALS:</h3>
-As mentioned, the tweaks are specified in the Professional Audio article in the Arch Wiki, and the article is included in the /root directory by default
+As mentioned, the tweaks are specified in the [Professional Audio] article in the Arch Wiki, and the article is included in the /root directory by default
