@@ -2,7 +2,7 @@
 
 <strong>Aoede Linux is an Arch Linux based audio engineering oriented distribution in the vein of the Ubuntu Studio, AV Linux, and KXStudio projects -- to name only a few of the inspirations for this project.
 
-The bulk of the modifications to the Arch-provided "archiso" releng (release engineering) scripts were taken from the Arch Wiki entry on [Professional Audio](https://wiki.archlinux.org/index.php/Professional_audio).
+The bulk of the modifications to the Arch-provided "archiso" releng (release engineering) scripts were taken from the Arch Wiki entry on [Professional Audio][1]. 
 </strong> 
 
 <h3>PREREQUISITES:</h3>
@@ -35,4 +35,8 @@ My build was interrupted, and I don't want to reinstall the whole filesystem or 
 See [here](https://wiki.archlinux.org/index.php/archiso) for more information
 
 <h3>CONFIG TECHNICALS:</h3>
-As mentioned, the tweaks are specified in the [Professional Audio] article in the Arch Wiki, and the article is included in the /root directory by default
+As mentioned, the tweaks are specified in the [Professional Audio][1] article in the Arch Wiki, and the article is included in the /root directory by default
+
+
+
+[1]: https://wiki.archlinux.org/index.php/Professional_audio/
