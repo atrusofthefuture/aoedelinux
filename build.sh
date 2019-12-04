@@ -1,5 +1,8 @@
 #!/bin/bash
 
+## This script has been modified from the maintainer-provided one to remove packages specified with the "$removes" variable at the end of the package install step. Since we are using linux-rt we can safely remove the standard linux kernel, headers and save a bit of space
+# minor changes for labeling (i.e. "$iso_name")
+
 set -e -u
 
 iso_name=aoedelinux
@@ -113,6 +116,8 @@ make_customize_airootfs() {
     curl -o ${work_dir}/x86_64/airootfs/etc/pacman.d/mirrorlist 'https://www.archlinux.org/mirrorlist/?country=all&protocol=http&use_mirror_status=on'
 
     lynx -dump -nolist 'https://wiki.archlinux.org/index.php/Installation_Guide?action=render' >> ${work_dir}/x86_64/airootfs/root/install.txt
+
+    lynx -dump -nolist 'https://wiki.archlinux.org/index.php/Professional_audio?action=render' > ${work_dir}/x86_64/airootfs/root/pro-audio.txt
 
     mkarchiso ${verbose} -w "${work_dir}/x86_64" -C "${work_dir}/pacman.conf" -D "${install_dir}" -r '/root/customize_airootfs.sh' run
     rm ${work_dir}/x86_64/airootfs/root/customize_airootfs.sh

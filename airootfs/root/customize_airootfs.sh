@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## This script is where the bulk of the customization is done after packages have been installed, prior to the start of the filesystem compression; at this point the filesystem is chrooted and many commands can be executed as if the system itself were running
+
 ## Note on customizations:
 # creates user
 # copies skel to user's home dir

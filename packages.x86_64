@@ -1,4 +1,4 @@
-linux-rt
+linux-rt ## see README
 qjackctl
 hydrogen
 guitarix
@@ -75,7 +75,6 @@ openssl
 elinks
 tcpdump
 vim
-emacs
 zile
 reptyr
 zsh
@@ -91,16 +90,10 @@ xterm
 xf86-video-nouveau
 mesa
 audacity
-libvirt
 pavucontrol
 pulseaudio-alsa
 alsa-utils
-cmus
 vlock
-virt-manager
-dnsmasq
-ebtables
-qemu
 clamav
 rkhunter
 mlocate
@@ -110,10 +103,7 @@ etckeeper
 xclip
 bind-tools
 iw
-aircrack-ng
-nmap
 macchanger
 traceroute
 openresolv
-firefox-developer-edition
-firejail
+firefox
