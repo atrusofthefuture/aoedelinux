@@ -3,11 +3,12 @@ Development repository for Aoede Linux
 
 Aoede Linux is an Arch Linux based audio engineering oriented distribution in the vein of the Ubuntu Studio, AV Linux, and KXStudio projects -- to name only a few of the inspirations for this project.
 
-The bulk of the modifications to the Arch-provided releng scripts can be sussed out from the Arch Wiki entry on Professional Audio https://wiki.archlinux.org/index.php/Professional_audio. 
+The bulk of the modifications to the Arch-provided "archiso" releng (release engineering) scripts were taken from the Arch Wiki entry on Professional Audio https://wiki.archlinux.org/index.php/Professional_audio. 
 
 PREREQUISITES:
-1. A running Arch Linux instance with packages "arch-install-scripts" and "archiso" installed; can be a live USB system but keep in mind final builds are ~2GB in size.
-2. Custom repository containing your own build of "linux-rt" AUR package; alternately uncomment the [coderkun] repository in pacman.conf
+1. >5GB hard drive space
+2. A running Arch Linux instance with packages "arch-install-scripts" and "archiso" installed; can be a live USB system but keep in mind final builds are ~2GB in size and the intermediate build stage is larger
+3. Custom repository containing your own build of "linux-rt" AUR package; alternately uncomment the [coderkun] repository in pacman.conf
 
 BUILDING:
 
