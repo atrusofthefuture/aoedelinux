@@ -1,7 +1,3 @@
-linux-rt ## see README
-qjackctl
-hydrogen
-guitarix
 arch-install-scripts
 b43-fwcutter
 broadcom-wl
@@ -64,6 +60,34 @@ wireless_tools
 wpa_actiond
 wvdial
 xl2tpd
+
+
+
+
+## X11 related
+lxde
+openbox
+xorg-xinit
+xorg
+xterm
+xf86-video-nouveau
+mesa
+
+## extra utilities
+firefox
+openresolv
+traceroute
+macchanger
+iw
+bind-tools
+xclip
+etckeeper
+pwgen
+unzip
+vlock
+clamav
+rkhunter
+mlocate
 intel-ucode
 ufw
 python
@@ -81,29 +105,22 @@ zsh
 grml-zsh-config
 git
 tree
-pulseaudio
-lxde
-openbox
-xorg-xinit
-xorg
-xterm
-xf86-video-nouveau
-mesa
+
+## audio
+linux-rt ## see README
+qjackctl
+hydrogen
+guitarix
 audacity
 pavucontrol
 pulseaudio-alsa
 alsa-utils
-vlock
-clamav
-rkhunter
-mlocate
-unzip
-pwgen
-etckeeper
-xclip
-bind-tools
-iw
-macchanger
-traceroute
-openresolv
-firefox
+pulseaudio
+ffmpeg
+
+## graphics
+gimp
+
+## video
+kdenlive
+vlc
