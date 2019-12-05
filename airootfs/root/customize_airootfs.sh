@@ -21,9 +21,6 @@ ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
 
 usermod -s /usr/bin/bash root
 
-## copy skel files to root 
-# cp -aT /etc/skel/root /root/
-
 chmod 700 /root
 
 ## lock root acct
