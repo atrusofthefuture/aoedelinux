@@ -8,7 +8,6 @@ The bulk of the modifications to the Arch-provided "archiso" releng (release eng
 <h3>PREREQUISITES:</h3>
 1. >5GB hard drive space<br>
 2. A running Arch Linux instance with packages "arch-install-scripts" and "archiso" installed; can be a live USB system but keep in mind final builds are ~2GB in size and the intermediate build stage is larger<br>
-3. Custom repository containing your own build of "linux-rt" AUR package; alternately uncomment the [coderkun] repository in pacman.conf<br>
 
 <h3>BUILDING:</h3>
 
@@ -22,6 +21,9 @@ login as user "arch", password is "live"<br>
 to start the LXDE graphical desktop environment, execute:<br>
 
 `$ startx`
+
+<strong>Recommendations:</strong>
+If you have >4GB of RAM, consider inserting 'copytoram=y' into the kernel parameters at the bootloader screen. This command loads the entire image into RAM, which speeds up program execution at the cost of occupying a large portion of active memory.
 
 <h3>Audio:</h3>
   The JACK Audio Connection Kit is a popular routing backend for Linux audio and Aoede includes he qjackctl GUI interface; many audio apps will ask to start JACK, although they do not all require it<br>
