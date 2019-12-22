@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
+# deps.sh
+# 
+# Use this script to automagically fetch and build specified AUR packages.
+# Specify an AUR helper application with the -H flag (currently only aurutils, yay, and *******other supported)
+# By default the packages stored in the "packages" variable are build, and this may be superceded by passing a flag argument when executing the script.
+# Ex. usage: $ deps.sh -o <list of packages to "o"verride>
+#	     $ deps.sh -a <list of packages to "a"ppend>
+# Alternately modify the packages variable with desired packages and run the script with no argument.
 
-custom-db=$HOME/custom.db.tar
+# global variables
+custom-db="$HOME/custom.db.tar"
+packages=( jack-keyboard bitwig etc )
 
 # =| $HOME/custom.db.tar
 # how do i check to see if the var is set and if not set it?
@@ -48,7 +58,11 @@ while getopts 'somelettersthatflagopts' arg; do
 options:
   --helper <aurhelper> (ex. aurutils, yaourt)
 
-for pkg in jack-keyboard bitwig etc;
+######## actual code follows
+
+build() {
+for pkg in jack-keyboard bitwig etc; ## obvs replace etc with selected packages
+	## for pkg in ${packages};
 do
 
 	if [[ -z `which makepkg` ]]; then
@@ -67,3 +81,36 @@ do
 		makepkg
 		repo-add ${custom-db} jack-keyboard.pkg.tar.xz;
 	fi
+}
+
+## refactor so that there's less redundancy
+# check if ${helper} is set; if so, use it
+# PROBLEM: syntax for helpers is different so can't just drop-in to same line
+# check if helper variable from getopts set
+	# if so, run relevant function
+	# if not, run main (build?) function, which checks to find a helper and defaults to makepkg if none found
+
+case ${helper} in
+	aur) build-aur ;;
+	yay) build-yay ;;
+	other) build-other ;;
+	*)
+		echo "invalid argument ${helper}" ;;
+esac
+
+build-aur() {
+	aur sync ${pkg}; 
+}
+
+while getopts 'H:o:a:h' arg; do # add verbose if needed
+	case "${arg}" in
+		H) helper="${OPTARG}" ;;
+		o) override="${OPTARG}" ;;
+		a) append="${OPTARG}" ;;
+	#	v) verbose= ;;
+		h) _usage 0 ;;
+		*) echo "Invalid argument ${arg}"
+			_usage 1
+			;;
+	esac
+done
