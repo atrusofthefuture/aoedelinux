@@ -2,21 +2,15 @@
 # deps.sh
 # 
 # Use this script to automagically fetch and build specified AUR packages.
-# Specify an AUR helper application with the -H flag (currently only aurutils, yay, and *******other supported)
+# Specify an AUR helper application with the -H flag (currently only aurutils, yay, and pakku supported)
 # By default the packages stored in the "packages" variable are build, and this may be superceded by passing a flag argument when executing the script.
 # Ex. usage: $ deps.sh -o <list of packages to "o"verride>
 #	     $ deps.sh -a <list of packages to "a"ppend>
 # Alternately modify the packages variable with desired packages and run the script with no argument.
 
 # global variables
-custom-db="$HOME/custom.db.tar"
+custom-db="$HOME/custom.db.tar.gz"
 packages=( jack-keyboard bitwig etc )
-
-# =| $HOME/custom.db.tar
-# how do i check to see if the var is set and if not set it?
-if [[ -z `echo $custom-db` ]]; then
-	repo-create $HOME/ custom; ## check syntax for creating local repo
-fi
 
 # ex.
 # jack-keyboard https://aur.archlinux.org/jack-keyboard.git
@@ -39,10 +33,18 @@ use some awk magic to sort them straight
 
 DEPS=$(grep ^depends PKGBUILD | cut -d '(' -f 2 | sed -e "s/'//g" -e 's/)$//')
 
+case "${helper}" in
+	aur) helper_fn="build-aur" ;;
+	yay) helper_fn="build-yay" ;;
+	pakku) helper_fn="build-pakku" ;;
+esac
+
 for i in ${DEPS};
 do
-	aurutils build "$i"
+	${helper_fn} "$i"
 done
+
+#how do i pass the package (represented in the temporary $i variable) as the argument to the helper function in $helper_fn
 
 # repo-add [options] <path-to-db> <package> [<package> ...]
 repo-add custom.db jack-keyboard.pkg.tar.xz
@@ -60,21 +62,38 @@ options:
 
 ######## actual code follows
 
-build() {
-for pkg in jack-keyboard bitwig etc; ## obvs replace etc with selected packages
-	## for pkg in ${packages};
-do
+_usage() {
+	echo "usage $(basename 0) [options]"
+	echo "Options:"
+	echo "	-a, --append [package-list]
+	Append packages to default list."
+	echo "  -o, --override [package-list]
+	Override default packages."
+	echo "  -H, --helper [aur-helper]
+	Select a preferred AUR helper."
+	echo "  -h, --help
+	Show this help message."
+	exit ${1}
+}
 
-	if [[ -z `which makepkg` ]]; then
+if [[ ${EUID} -ne 0 ]]; then
+	echo "This script must be run as root."
+	_usage 1
+fi
+
+build() {
+for pkg in "${packages}"
+do
+	if [[ -z $(which makepkg) ]]; then
 		exit 1;
 	fi
 	
-	if [[ -n `which aur` ]]; then
+	if [[ -n $(which aur) ]]; then
 		aur sync ${pkg}; 
-	elif [[ -n `which yay` ]]; then
-		yay; ${pkg} ## check command syntax and update
-	elif [[ -n `which ` ]]; then ## placeholder for third aur helper
-		command ${pkg};
+	elif [[ -n $(which yay) ]]; then
+		yay -S ${pkg}; 
+	elif [[ -n $(which pakku) ]]; then 
+		pakku -Sn ${pkg};
 	else
 		git clone "https://aur.archlinux.org/packages/${pkg}.git"
 		cd ${pkg}
@@ -98,8 +117,16 @@ case ${helper} in
 		echo "invalid argument ${helper}" ;;
 esac
 
-build-aur() {
+build-aur(pkg) {
 	aur sync ${pkg}; 
+}
+
+build-yay(pkg) {
+	yay -S ${pkg};
+}
+
+build-pakku(pkg) {
+	pakku -Sn ${pkg};
 }
 
 while getopts 'H:o:a:h' arg; do # add verbose if needed
@@ -114,3 +141,18 @@ while getopts 'H:o:a:h' arg; do # add verbose if needed
 			;;
 	esac
 done
+
+
+####
+program flow:
+
+
+
+
+
+
+
+
+
+finally
+  if none of the branching conditions are met, run build()
