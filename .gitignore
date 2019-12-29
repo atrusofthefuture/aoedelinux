@@ -1,2 +1,2 @@
-./docs
-./deps.sh
+docs/*
+deps.sh
