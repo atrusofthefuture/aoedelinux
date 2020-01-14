@@ -12,6 +12,7 @@
 # umask 077
 
 set -e -u
+set -o xtrace
 
 sed -i 's/#\(en_US\.UTF-8\)/\1/' /etc/locale.gen
 locale-gen
@@ -40,8 +41,16 @@ systemctl set-default multi-user.target
 
 ### CUSTOMIZATIONS
 
+## Firewall
+#ufw allow in on ens3 from 192.168.122.1 to any app ssh
+sed -i '/icmp/s/ACCEPT/DROP/' /etc/ufw/before.rules
+sed -i '/icmp/s/ACCEPT/DROP/' /etc/ufw/before6.rules
+ufw enable
+
 ## create sudo group
-groupadd sudo
+if [[ -z $(grep sudo /etc/group) ]]; then
+	groupadd sudo
+fi
 
 ## create user "arch" and add to useful groups (esp. sudo since we locked root above)
 ## sets default password to "live"
@@ -53,9 +62,6 @@ chown -R arch: /home/arch/
 ## uncomment %sudo group in sudoers file to give permission
 sed -i '/%sudo/s/^#//' /etc/sudoers
 
-#ufw allow in on ens3 from 192.168.122.1 to any app ssh
-#sed -i '/icmp/s/ACCEPT/DROP/' /etc/ufw/before.rules
-ufw enable
 
 #sed -i 's/#X11Forwarding no/X11Forwarding yes/' /etc/ssh/sshd_config
 
